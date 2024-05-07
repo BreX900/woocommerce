@@ -33,24 +33,22 @@
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class LocalDatabaseService {
+class TokenStorage {
+  final securityToken = FlutterSecureStorage();
 
-  final securityToken = new FlutterSecureStorage();
-
-  updateSecurityToken(String? token) async{
+  Future<void> update(String token) async {
     await securityToken.write(key: 'token', value: token);
   }
 
-  deleteSecurityToken() async{
+  Future<void> delete() async {
     await securityToken.delete(key: 'token');
   }
 
-  Future<String> getSecurityToken () async{
-    String? token = await securityToken.read(key: 'token');
-    if(token == null){
-      token = '0';
-    }
+  Future<String?> read() async {
+    final token = await securityToken.read(key: 'token');
+    // if (token == null) {
+    //   token = '0';
+    // }
     return token;
   }
-
 }
